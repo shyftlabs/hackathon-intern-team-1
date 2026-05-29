@@ -18,6 +18,15 @@ fi
 
 cd "$HERE"
 PORT="${PORT:-8099}"
+
+# Ensure the Continuum framework (import root: ``orchestrator``) is importable.
+# The venv's editable install can record a stale absolute path if the repo was
+# moved/copied; prepending the real local source makes the import robust here.
+CONT_SRC="$HERE/../continuum/src"
+if [[ -d "$CONT_SRC" ]]; then
+  export PYTHONPATH="$CONT_SRC${PYTHONPATH:+:$PYTHONPATH}"
+fi
+
 echo "Returns Optimization Engine → http://127.0.0.1:${PORT}"
 echo "(first start seeds long-term memory for the demo customers — ~1 min)"
 exec "$VENV_PY" -m uvicorn app.api:app --host 127.0.0.1 --port "$PORT"
