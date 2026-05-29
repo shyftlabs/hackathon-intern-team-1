@@ -1,0 +1,19 @@
+# The engine runs on the ShyftLabs Continuum framework, which is installed in
+# ../continuum/.venv (import root: `orchestrator`). The simplest way to run this
+# project is to use that interpreter directly:
+#
+#     ../continuum/.venv/bin/python -m uvicorn app.api:app --port 8099
+#
+# These are the direct third-party dependencies this project uses on top of the
+# framework. All are already present in ../continuum/.venv.
+
+shyftlabs-continuum     # the agentic framework (orchestrator.*)
+starlette>=1.0          # web layer (FastAPI is NOT required)
+uvicorn>=0.30           # ASGI server
+pydantic>=2.0           # typed agent contracts
+python-dotenv>=1.0      # .env bootstrap
+mcp>=1.23               # FastMCP server (mcp.server.fastmcp)
+
+# Optional — durable approval gate (temporal_workflow.py). Not required; the
+# in-process approval gate works without it.
+# temporalio>=1.6
